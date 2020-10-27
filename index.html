@@ -4,6 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snake</title>
+    <style>
+      body {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        /* Ensure that the game board is always in the center of the screen */
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        background-color: black;
+      }
+      #game-board {
+        background-color: #ccc;
+        /* Using 'vmin' on both height and width will ensure that we always have a square shape that is as large as it can be on the screen (while still being a square) */
+        width: 100vmin;
+        height: 100vmin;
+        /* Create the playing area, where it has 21 rows of equal size and 21 columns of equal size */
+        display: grid;
+        grid-template-rows: repeat(21, 1fr);
+        grid-template-columns: repeat(21, 1fr);
+      }
+      .snake {
+        background-color: hsl(200, 100%, 50%);
+        border: 0.25vmin solid black;
+      }
+      .food {
+        background-color: hsl(50, 100%, 50%);
+        border: 0.25vmin solid black;
+      }
+    </style>
   </head>
   <body>
     <div id="game-board"></div>
