@@ -1,7 +1,7 @@
 import { getInputDirection } from './input.js';
 
 // set how quickly snake will move a second
-export const snakeSpeed = 2;
+export const snakeSpeed = 4;
 
 // create the snake 'body' to start at the center of board
 const snakeBody = [{ x: 11, y: 11 }];
@@ -47,8 +47,9 @@ function addSegments() {
   newSegments = 0;
 }
 // This method will determine if any of the snake's body is overlapping with the position of the food
-export function onSnake(position) {
-  return snakeBody.some((segment) => {
+export function onSnake(position, { ignoreHead = false } = {}) {
+  return snakeBody.some((segment, index) => {
+    if (ignoreHead && index === 0) return false;
     return equalPositions(segment, position);
   });
 }
@@ -57,4 +58,12 @@ function equalPositions(snakePosition, foodPosition) {
   return (
     snakePosition.x === foodPosition.x && snakePosition.y === foodPosition.y
   );
+}
+
+export function getSnakeHead() {
+  return snakeBody[0];
+}
+
+export function snakeIntersection() {
+  return onSnake(snakeBody[0], { ignoreHead: true });
 }

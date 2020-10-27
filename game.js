@@ -2,8 +2,11 @@ import {
   snakeSpeed,
   draw as drawSnake,
   update as updateSnake,
+  getSnakeHead,
+  snakeIntersection,
 } from './snake.js';
 import { draw as drawFood, update as updateFood } from './food.js';
+import { outsideGrid } from './grid.js';
 
 // create variable to hold location of where we want the game to be
 const gameBoard = document.getElementById('game-board');
@@ -13,7 +16,13 @@ const gameBoard = document.getElementById('game-board');
 // create variable that will hold when the game was last rendered
 let lastRenderTime = 0;
 
+// create variable to determine if user loses
+let gameOver = false;
+
 function main(currentTime) {
+  if (gameOver) {
+    return alert('You lose');
+  }
   window.requestAnimationFrame(main);
   // divide by 1000 to turn into seconds
   const secondsSinceLastRender = (currentTime - lastRenderTime) / 1000;
@@ -31,6 +40,7 @@ window.requestAnimationFrame(main);
 function update() {
   updateSnake();
   updateFood();
+  checkDeath();
 }
 
 function draw() {
@@ -38,4 +48,8 @@ function draw() {
   gameBoard.innerHTML = '';
   drawSnake(gameBoard);
   drawFood(gameBoard);
+}
+
+function checkDeath() {
+  gameOver = outsideGrid(getSnakeHead()) || snakeIntersection();
 }
