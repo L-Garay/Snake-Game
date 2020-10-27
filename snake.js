@@ -7,6 +7,7 @@ export const snakeSpeed = 2;
 const snakeBody = [{ x: 11, y: 11 }];
 
 export function update() {
+  addSegments();
   const inputDirection = getInputDirection();
   // this for loop starts at the second to last body part of the snake, and makes its way to the head
   for (let i = snakeBody.length - 2; i >= 0; i--) {
@@ -31,4 +32,29 @@ export function draw(gameBoard) {
     // add the newly created and styled div element to the 21x21 css grid div element called 'game-board' that was passed into the method
     gameBoard.appendChild(snakeElement);
   });
+}
+
+// the amount will be determined by the 'expansionRate' variable value that is passed in from food.js method
+let newSegments = 0;
+export function expandSnake(amount) {
+  newSegments += amount;
+}
+// Once the number of segments to add is determined, this method will essentially make a copy of the last body part and add it to the end of the snakeBody array(the snake body) for however many times
+function addSegments() {
+  for (let i = 0; i < newSegments; i++) {
+    snakeBody.push({ ...snakeBody[snakeBody.length - 1] });
+  }
+  newSegments = 0;
+}
+// This method will determine if any of the snake's body is overlapping with the position of the food
+export function onSnake(position) {
+  return snakeBody.some((segment) => {
+    return equalPositions(segment, position);
+  });
+}
+// Uses this helper function to compare snake's position with food's position
+function equalPositions(snakePosition, foodPosition) {
+  return (
+    snakePosition.x === foodPosition.x && snakePosition.y === foodPosition.y
+  );
 }

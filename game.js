@@ -3,6 +3,7 @@ import {
   draw as drawSnake,
   update as updateSnake,
 } from './snake.js';
+import { draw as drawFood, update as updateFood } from './food.js';
 
 // create variable to hold location of where we want the game to be
 const gameBoard = document.getElementById('game-board');
@@ -29,10 +30,12 @@ window.requestAnimationFrame(main);
 
 function update() {
   updateSnake();
+  updateFood();
 }
 
 function draw() {
   // clear out any previous positions of where the snake used to be (the proper positions will get rerendered)
   gameBoard.innerHTML = '';
   drawSnake(gameBoard);
+  drawFood(gameBoard);
 }
