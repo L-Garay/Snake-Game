@@ -34,6 +34,8 @@
         border: 0.25vmin solid black;
       }
     </style>
+    <!-- Bring in the JS file and defer it so it loads after the body, and set type to module so you can use multiple JS files using import/export -->
+    <script type="module" src="game.js" defer></script>
   </head>
   <body>
     <div id="game-board"></div>
